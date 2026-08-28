@@ -15,6 +15,17 @@ function isLight(hex: string) {
   return (r * 299 + g * 587 + b * 114) / 1000 > 180;
 }
 
+function AgentComputer() {
+  return (
+    <svg className="org-computer" viewBox="0 0 44 34" aria-hidden>
+      <rect x="4" y="3" width="36" height="23" rx="3" />
+      <path d="M16 31h12M22 26v5" />
+      <circle cx="16" cy="14" r="3" />
+      <circle cx="28" cy="14" r="3" />
+    </svg>
+  );
+}
+
 function Box({
   bot,
   chief = false,
@@ -25,16 +36,20 @@ function Box({
   const className = chief ? "org-box is-chief" : "org-box";
   const body = (
     <>
-      <span
-        className="org-avatar"
-        style={{
-          background: bot.color,
-          color: isLight(bot.color) ? "#111" : "#fff",
-        }}
-        aria-hidden
-      >
-        {initials(bot)}
-      </span>
+      {chief ? (
+        <span
+          className="org-avatar"
+          style={{
+            background: bot.color,
+            color: isLight(bot.color) ? "#111" : "#fff",
+          }}
+          aria-hidden
+        >
+          {initials(bot)}
+        </span>
+      ) : (
+        <AgentComputer />
+      )}
       <span className="org-name">{bot.name}</span>
       <span className="org-blurb">{bot.blurb}</span>
     </>
@@ -59,11 +74,11 @@ export function RosterChart() {
 
   return (
     <section id="roster" className="roster">
-      <h2>A background team for every sales rep</h2>
+      <h2>A fleet of agents with its own computers</h2>
       <p className="section-lede">
-        The work itself is the trigger. A call starts, an email lands, or an
-        account enters the list — and the right agent picks it up. They keep
-        working after the laptop closes. Drafts stay drafts until the rep sends.
+        The work is the trigger. A call starts, an email lands, or an account
+        enters the list. The right agent picks it up. Every draft waits for the
+        seller to review it.
       </p>
 
       <div className="org" role="tree">

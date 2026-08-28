@@ -1,12 +1,21 @@
-# Grok Bot for Datadog GTM
+# Zoom x SpaceXAI
 
-Passworded site. Grok Bot from SpaceXAI, for Datadog GTM.
+This password-protected Next.js site shows three Grok Bot scenes for Zoom GTM. Each scene follows an agent from a work trigger to a draft that the seller reviews.
 
-## What it is
+## Stack
 
-Three GTM jobs on one page. Each job has a short problem statement, an interactive Grok Bot demo, and the matching Krista Letz clips under that demo. Below that: a light index of the clips and the public Grok Bot quote wall.
+- Next.js 15.5 App Router
+- React 19
+- Geist
+- vgpu
+- Tailwind CSS 4
+- TypeScript
 
-## Run locally
+The app lives in `src/`. Keep the route groups and the interactive playback structure when changing customer content.
+
+## Run the site
+
+Copy the environment template and set the shared site password.
 
 ```bash
 cp .env.example .env.local
@@ -14,18 +23,12 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000). Default password is `land2expand` (override with `SITE_PASSWORD`).
+Open [http://localhost:3000](http://localhost:3000).
 
-## Krista clips
+## Brand source
 
-Download into `private/media/krista-clips/` from the GitHub release (served only through the passworded `/api/media/...` route):
-
-```bash
-gh release download krista-gtm-clips-720p-2026-08-26 \
-  --repo Speediing/grok-bot-quotes \
-  --dir private/media/krista-clips
-```
+`src/components/BrandLockup.tsx` loads the official Zoom wordmark from the CDN used by [zoom.com](https://www.zoom.com). The SpaceXAI mark lives in `public/brand/spacexai.svg`.
 
 ## Deploy
 
-Preview only under the `jasonwiker` Vercel team, project name `datadog-cro`. Set `SITE_PASSWORD=land2expand`. Do not promote to a public production domain until Jason says so.
+Use the `jasonwiker` Vercel scope and set `SITE_PASSWORD` in the project environment. The production alias is `zoom-grokbot.vercel.app`.

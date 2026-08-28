@@ -6,12 +6,11 @@ function OutboundPack({
 }: {
   artifact: Extract<Artifact, { kind: "outbound" }>;
 }) {
-  const contact = artifact.targets[0]?.name ?? "your buyer";
-  const firstName = contact.split(" ")[0];
+  const source = artifact.evidence[0];
 
   return (
     <div className="leave leave-out-phone">
-      <div className="out-phone" aria-label="Sales Outbound approval chat">
+      <div className="out-phone" aria-label="Scout approval chat">
         <div className="out-phone-notch" aria-hidden />
         <header className="out-phone-header">
           <span className="out-phone-back" aria-hidden>
@@ -21,8 +20,8 @@ function OutboundPack({
             ✦
           </span>
           <p>
-            <strong>Sales Outbound</strong>
-            <small>{artifact.account} · drafts ready</small>
+            <strong>Scout</strong>
+            <small>{artifact.account}, drafts ready</small>
           </p>
           <span className="out-phone-desktop" aria-hidden>
             ▣
@@ -31,39 +30,39 @@ function OutboundPack({
 
         <div className="out-phone-thread">
           <article className="out-email-card">
-            <p className="out-email-label">Draft email · 1 of 10</p>
+            <p className="out-email-label">Draft email</p>
             <p className="out-email-subject">
-              Subject · {artifact.account}&apos;s last Sev-2
+              Subject, a sourced note for {artifact.account}
             </p>
             <div className="out-email-copy">
-              <p>Hi {firstName},</p>
+              <p>Hi,</p>
               <p>
-                Your status page and open Staff SRE role point to the same
-                thing: on-call still stitches APM and logs to name a Sev-2.
+                I found a current public signal that may connect to one Zoom
+                workflow. I kept the source in a short account note.
               </p>
-              <p>
-                I put together the 90-second version for your platform team.
-                Worth fifteen minutes next week?
-              </p>
-              <p>Sam</p>
+              {source ? (
+                <p>
+                  <strong>{source.source}.</strong> {source.finding}
+                </p>
+              ) : null}
+              <p>Would it be useful if I sent the note before we speak?</p>
+              <p>Your Zoom rep</p>
             </div>
             <footer>
-              <span>Send email</span>
-              <span>Discard</span>
+              <span>Approve</span>
+              <span>Keep as draft</span>
             </footer>
           </article>
 
-          <p className="out-message is-you">
-            Send the top 10 emails. They look good.
-          </p>
+          <p className="out-message is-you">Approve this draft.</p>
           <p className="out-message is-bot">
-            Top 10 sending. The rest stay queued.
+            Approved. The other drafts stay queued.
           </p>
         </div>
 
         <footer className="out-phone-composer">
           <span aria-hidden>+</span>
-          <p>Message Sales Outbound</p>
+          <p>Message Scout</p>
           <span aria-hidden>◉</span>
         </footer>
       </div>
@@ -71,103 +70,7 @@ function OutboundPack({
   );
 }
 
-function UpstairsMemo({
-  artifact,
-}: {
-  artifact: Extract<Artifact, { kind: "forecast" }>;
-}) {
-  return (
-    <div className="leave leave-memo">
-      <header className="leave-memo-top">
-        <div>
-          <p className="leave-kicker">{artifact.title}</p>
-          <h3>
-            {artifact.account || "Acme"}
-            {artifact.amount ? ` · ${artifact.amount}` : ""}
-          </h3>
-        </div>
-        <p className="leave-stamp">{artifact.status}</p>
-      </header>
-      <p className="leave-memo-body">{artifact.body}</p>
-      {artifact.gaps?.length ? (
-        <ul className="leave-stamps">
-          {artifact.gaps.map((gap) => (
-            <li key={gap.label}>
-              <strong>{gap.label}</strong>
-              <span>{gap.body}</span>
-            </li>
-          ))}
-        </ul>
-      ) : null}
-    </div>
-  );
-}
-
-function FieldPack({
-  artifact,
-}: {
-  artifact: Extract<Artifact, { kind: "talk-tracks" }>;
-}) {
-  return (
-    <div className="leave leave-pack">
-      <header className="leave-pack-top">
-        <p className="leave-kicker">Friday field pack</p>
-        <h3>{artifact.title}</h3>
-      </header>
-      <ol className="leave-cards">
-        {artifact.tracks.map((track) => (
-          <li key={track.seat}>
-            <p className="leave-seat">{track.seat}</p>
-            <p className="leave-line">{track.line}</p>
-          </li>
-        ))}
-      </ol>
-    </div>
-  );
-}
-
-function BetterAnswer({
-  artifact,
-}: {
-  artifact: Extract<Artifact, { kind: "scorecard" }>;
-}) {
-  return (
-    <div className="leave leave-answer">
-      <header className="leave-answer-top">
-        <div>
-          <p className="leave-kicker">Open source objection</p>
-          <h3>The line that wins</h3>
-        </div>
-        <p className="leave-score">{artifact.score}</p>
-      </header>
-      <div className="leave-split">
-        <section className="leave-before">
-          <p className="leave-kicker">Too abstract</p>
-          <p className="leave-weak">
-            {artifact.weakLine || artifact.notes[0]}
-          </p>
-          <ul>
-            {artifact.notes.map((note) => (
-              <li key={note}>{note}</li>
-            ))}
-          </ul>
-        </section>
-        <section className="leave-after">
-          <p className="leave-kicker">Say this</p>
-          <p className="leave-win">{artifact.betterAnswer}</p>
-          <p className="leave-incident" aria-hidden>
-            <span>Prometheus</span>
-            <span>Grafana</span>
-            <span>Log pile</span>
-            <b>APM + Logs</b>
-          </p>
-        </section>
-      </div>
-    </div>
-  );
-}
-
-function RedlinePack({
+function AnswerPack({
   artifact,
 }: {
   artifact: Extract<Artifact, { kind: "redlines" }>;
@@ -176,7 +79,7 @@ function RedlinePack({
     <div className="leave leave-paper">
       <header className="leave-paper-top">
         <div>
-          <p className="leave-kicker">No internal chase</p>
+          <p className="leave-kicker">Approved sources first</p>
           <h3>{artifact.title}</h3>
         </div>
         <p className="leave-paper-from">{artifact.from}</p>
@@ -189,14 +92,14 @@ function RedlinePack({
               <li key={mark.text} className={mark.take ? "is-take" : "is-hold"}>
                 <p className="leave-mark-line">{mark.text}</p>
                 <p className="leave-mark-note">
-                  <b>{mark.take ? "Answer" : "Hold"}.</b> {mark.note}
+                  <b>{mark.take ? "Draft" : "Hold"}.</b> {mark.note}
                 </p>
               </li>
             ))}
           </ol>
         </section>
         <section className="leave-reply">
-          <p className="leave-kicker">Draft reply · not sent</p>
+          <p className="leave-kicker">Reply draft, not sent</p>
           <p className="leave-reply-meta">
             <span>To</span>
             {artifact.reply.to}
@@ -214,11 +117,9 @@ function RedlinePack({
 
 export function ChapterPayoff({
   beat,
-  wash,
   value,
 }: {
   beat: StoryBeat;
-  wash?: string;
   value?: string;
 }) {
   const slides = beat.slides;
@@ -226,17 +127,11 @@ export function ChapterPayoff({
 
   let body = null;
   if (slides?.length) {
-    body = <HeardSlide slides={slides} size="lg" wash={wash} />;
+    body = <HeardSlide slides={slides} size="lg" />;
   } else if (artifact?.kind === "redlines") {
-    body = <RedlinePack artifact={artifact} />;
+    body = <AnswerPack artifact={artifact} />;
   } else if (artifact?.kind === "outbound") {
     body = <OutboundPack artifact={artifact} />;
-  } else if (artifact?.kind === "forecast") {
-    body = <UpstairsMemo artifact={artifact} />;
-  } else if (artifact?.kind === "talk-tracks") {
-    body = <FieldPack artifact={artifact} />;
-  } else if (artifact?.kind === "scorecard") {
-    body = <BetterAnswer artifact={artifact} />;
   }
 
   if (!body) return null;

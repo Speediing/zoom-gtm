@@ -1,17 +1,12 @@
 export type ClipId =
   | "01-morning-inbox"
   | "02-prospecting-pg"
-  | "03-slides-granola"
-  | "04-engineer-bugbot"
-  | "05-forecast-sfdc"
-  | "06-customer-expert"
-  | "07-customer-exec-brief"
-  | "08-chief-groupchat";
+  | "03-slides-granola";
 
 export type JobId =
-  | "standardize-room"
-  | "legal-redlines"
-  | "attach-engine";
+  | "meeting-brief"
+  | "answer-desk"
+  | "account-scout";
 
 export type ParticipantRole = "you" | "bot";
 
@@ -54,10 +49,9 @@ export type StoryVisual =
       people: { initials: string; name: string }[];
     }
   | {
-      kind: "live-transcript";
-      timestamp: string;
-      speaker: string;
-      quote: string;
+      kind: "live-notes";
+      title: string;
+      items: string[];
       signals: string[];
     }
   | {
@@ -68,10 +62,10 @@ export type StoryVisual =
       status: string;
     }
   | {
-      kind: "procurement-email";
+      kind: "customer-email";
       sender: string;
       subject: string;
-      questions: number;
+      summary: string;
     }
   | {
       kind: "answers-found";
@@ -235,7 +229,7 @@ export type Clip = {
   caption: string;
 };
 
-export type CroJob = {
+export type GtmJob = {
   id: JobId;
   number: number;
   title: string;

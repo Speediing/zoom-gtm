@@ -1,15 +1,22 @@
-import type { CroJob, JobId } from "@/data/types";
+import type { GtmJob } from "@/data/types";
 import { Storyboard } from "./Storyboard";
 import { ChapterPayoff } from "./ChapterPayoff";
 import { JobMore } from "./JobMore";
 
-const JOB_ART: Record<JobId, string> = {
-  "standardize-room": "/brand/watercolor-room.png",
-  "legal-redlines": "/brand/watercolor-deal.png",
-  "attach-engine": "/brand/watercolor-attach.png",
-};
+function AgentArt() {
+  return (
+    <svg viewBox="0 0 360 240" aria-hidden>
+      <path d="M28 170c45-100 118-142 220-118 51 12 82 48 90 108" />
+      <rect x="102" y="72" width="142" height="94" rx="16" />
+      <circle cx="148" cy="118" r="12" />
+      <circle cx="200" cy="118" r="12" />
+      <path d="M150 150h48M174 166v28M132 195h84" />
+      <path d="M68 52c24 14 40 30 52 49M280 64c-24 14-40 30-52 49" />
+    </svg>
+  );
+}
 
-export function JobSection({ job }: { job: CroJob }) {
+export function JobSection({ job }: { job: GtmJob }) {
   const lastBeat = job.storyboard[job.storyboard.length - 1];
   const payoff =
     lastBeat?.artifact || lastBeat?.slides?.length ? lastBeat : undefined;
@@ -22,8 +29,7 @@ export function JobSection({ job }: { job: CroJob }) {
       </p>
       <div>
         <div className="job-art" aria-hidden>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={JOB_ART[job.id]} alt="" />
+          <AgentArt />
         </div>
         <div className="background-agent">
           <span className="background-agent-pulse" aria-hidden />
@@ -38,7 +44,7 @@ export function JobSection({ job }: { job: CroJob }) {
         <p className="job-value">{job.outcome}</p>
         <Storyboard beats={lead} />
         {payoff ? (
-          <ChapterPayoff beat={payoff} wash={JOB_ART[job.id]} />
+          <ChapterPayoff beat={payoff} />
         ) : null}
         <JobMore job={job} />
       </div>

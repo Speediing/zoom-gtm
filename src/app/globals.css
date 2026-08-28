@@ -6,8 +6,8 @@
   --paper: #f5f1e8;
   --surface: #fbf9f4;
   --line: #d8d3c8;
-  --accent: #632ca6;
-  --accent-dark: #4c1d82;
+  --accent: #2d8cff;
+  --accent-dark: #0b5cff;
   --sage: #788274;
   --blue: #5e7180;
   --bg: var(--paper);
@@ -315,16 +315,16 @@ button:active:not(:focus-visible),
 }
 
 .brand-lockup {
-  --dd-h: 36px;
+  --brand-h: 18px;
   display: inline-flex;
-  align-items: flex-start;
-  gap: 0.4rem;
+  align-items: center;
+  gap: 0.32rem;
   min-width: 0;
   color: var(--ink);
   text-decoration: none;
 }
 
-.brand-dd,
+.brand-zoom,
 .brand-sxai {
   display: block;
   width: auto;
@@ -334,14 +334,13 @@ button:active:not(:focus-visible),
   object-fit: contain;
 }
 
-.brand-dd {
-  height: var(--dd-h);
+.brand-zoom {
+  height: var(--brand-h);
 }
 
 .brand-sxai {
-  height: calc(var(--dd-h) * 0.58);
-  max-width: calc(var(--dd-h) * 4.8);
-  margin-top: calc(var(--dd-h) * 0.2);
+  height: calc(var(--brand-h) * 0.58);
+  max-width: calc(var(--brand-h) * 4.8);
   filter: brightness(0);
 }
 
@@ -350,19 +349,19 @@ button:active:not(:focus-visible),
 }
 
 .brand-lockup-sm {
-  --dd-h: 24px;
+  --brand-h: 18px;
 }
 
 .brand-lockup-md,
 .brand-lockup-lg {
-  --dd-h: 32px;
+  --brand-h: 18px;
 }
 
 .brand-times {
   align-self: center;
   margin-top: 0;
   color: var(--muted);
-  font-size: calc(var(--dd-h) * 0.28);
+  font-size: calc(var(--brand-h) * 0.55);
   font-weight: 300;
   line-height: 1;
 }
@@ -406,7 +405,7 @@ button:active:not(:focus-visible),
   position: relative;
   width: 100%;
   overflow: hidden;
-  background: #1a1b18;
+  background: #10213d;
 }
 
 .hero-watercolor-image {
@@ -443,6 +442,15 @@ button:active:not(:focus-visible),
 
 .report-hero {
   position: relative;
+}
+
+.hero-watercolor + .report {
+  position: relative;
+  z-index: 2;
+  margin-top: clamp(-8rem, -9vw, -4rem);
+  border-radius: 2rem 2rem 0 0;
+  background: var(--paper);
+  box-shadow: 0 -1.5rem 4rem rgba(16, 33, 61, 0.14);
 }
 
 .report-hero .hero,
@@ -606,19 +614,14 @@ button:active:not(:focus-visible),
 
 .orbit-break {
   position: relative;
-  height: auto;
+  height: clamp(10rem, 22vw, 18rem);
   overflow: hidden;
   pointer-events: none;
-  background: var(--paper);
-}
-
-.orbit-break img {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-height: min(42vh, 420px);
-  object-fit: cover;
-  object-position: 48% 58%;
+  background:
+    radial-gradient(ellipse at 18% 48%, rgba(45, 140, 255, 0.2), transparent 34%),
+    radial-gradient(ellipse at 58% 62%, rgba(108, 177, 255, 0.24), transparent 30%),
+    radial-gradient(ellipse at 86% 36%, rgba(16, 33, 61, 0.16), transparent 28%),
+    linear-gradient(var(--paper), #edf5ff 48%, var(--paper));
 }
 
 .orbit-break::after {
@@ -702,11 +705,14 @@ button:active:not(:focus-visible),
   pointer-events: none;
 }
 
-.job-art img {
+.job-art svg {
   display: block;
   width: 100%;
   height: auto;
-  opacity: 0.18;
+  fill: color-mix(in srgb, var(--accent) 8%, transparent);
+  stroke: color-mix(in srgb, var(--accent) 56%, transparent);
+  stroke-width: 2;
+  opacity: 0.32;
   mix-blend-mode: multiply;
 }
 
@@ -909,11 +915,11 @@ button:active:not(:focus-visible),
 
 .story-transcript-ui {
   background:
-    linear-gradient(155deg, rgba(99, 44, 166, 0.08), transparent 55%),
+    linear-gradient(155deg, rgba(45, 140, 255, 0.08), transparent 55%),
     var(--surface);
 }
 
-.story-transcript-ui blockquote {
+.story-transcript-ui ul {
   display: grid;
   gap: 0.22rem;
   min-height: 6rem;
@@ -923,13 +929,19 @@ button:active:not(:focus-visible),
   font-size: 0.72rem;
   letter-spacing: -0.02em;
   line-height: 1.42;
+  list-style: none;
 }
 
-.story-transcript-ui blockquote strong {
+.story-transcript-ui li {
+  position: relative;
+  padding-left: 0.9rem;
+}
+
+.story-transcript-ui li::before {
+  position: absolute;
+  left: 0;
   color: var(--accent);
-  font-size: 0.58rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  content: "✓";
 }
 
 .story-transcript-ui footer {
@@ -975,7 +987,7 @@ button:active:not(:focus-visible),
   border-radius: 0.38rem;
   color: #fff;
   background:
-    radial-gradient(circle at 90% 12%, rgba(99, 44, 166, 0.8), transparent 34%),
+    radial-gradient(circle at 90% 12%, rgba(45, 140, 255, 0.8), transparent 34%),
     #29242f;
 }
 
@@ -1013,7 +1025,7 @@ button:active:not(:focus-visible),
 
 .story-email-ui {
   background:
-    linear-gradient(145deg, rgba(99, 44, 166, 0.06), transparent 58%),
+    linear-gradient(145deg, rgba(45, 140, 255, 0.06), transparent 58%),
     var(--surface);
 }
 
@@ -1191,7 +1203,7 @@ button:active:not(:focus-visible),
 
 .story-research-ui {
   background:
-    radial-gradient(circle at 50% 60%, rgba(99, 44, 166, 0.11), transparent 48%),
+    radial-gradient(circle at 50% 60%, rgba(45, 140, 255, 0.11), transparent 48%),
     var(--surface);
 }
 
@@ -1458,14 +1470,7 @@ button:active:not(:focus-visible),
   min-height: 0;
   overflow: hidden;
   aspect-ratio: 1024 / 676;
-  background: #0a0a0a;
-}
-
-.heard-slide img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  background: var(--surface);
 }
 
 .heard-bar {
@@ -4033,6 +4038,15 @@ button:active:not(:focus-visible),
   line-height: 1;
 }
 
+.org-computer {
+  grid-row: 1 / span 2;
+  width: 2.75rem;
+  color: var(--accent);
+  fill: color-mix(in srgb, var(--accent) 8%, var(--surface));
+  stroke: currentColor;
+  stroke-width: 1.7;
+}
+
 .org-name {
   grid-column: 2;
   color: var(--ink);
@@ -4151,7 +4165,7 @@ button:active:not(:focus-visible),
 
 .org-kids {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.7rem;
   margin: 0;
   padding: 0;
@@ -5026,6 +5040,11 @@ button:active:not(:focus-visible),
     padding: 16px 20px;
   }
 
+  .hero-watercolor-image {
+    height: 26rem;
+    object-position: 66% center;
+  }
+
   .header-actions {
     display: flex;
     gap: 0.12rem;
@@ -5584,11 +5603,15 @@ button:active:not(:focus-visible),
 
 @media (max-width: 640px) {
   .nav-brand {
-    display: none;
+    display: flex;
   }
 
   .site-header {
-    justify-content: flex-end;
+    justify-content: space-between;
+  }
+
+  .header-actions .text-button:not(:nth-child(2)) {
+    display: none;
   }
 
   .hero h1,

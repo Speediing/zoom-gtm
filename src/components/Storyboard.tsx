@@ -144,17 +144,18 @@ function LiveVisual({ visual }: { visual: StoryVisual }) {
           </footer>
         </div>
       );
-    case "live-transcript":
+    case "live-notes":
       return (
         <div className="story-ui story-transcript-ui" aria-hidden>
           <header className="story-ui-bar">
-            <strong>Live transcript</strong>
-            <span>{visual.timestamp}</span>
+            <strong>{visual.title}</strong>
+            <span>Live</span>
           </header>
-          <blockquote>
-            <strong>{visual.speaker}</strong>
-            “{visual.quote}”
-          </blockquote>
+          <ul>
+            {visual.items.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
           <footer>
             {visual.signals.map((signal) => (
               <span key={signal}>{signal}</span>
@@ -177,12 +178,12 @@ function LiveVisual({ visual }: { visual: StoryVisual }) {
           <footer>✓ {visual.status}</footer>
         </div>
       );
-    case "procurement-email":
+    case "customer-email":
       return (
         <div className="story-ui story-email-ui" aria-hidden>
           <header className="story-ui-bar">
-            <strong>Inbox</strong>
-            <span>5:27 AM</span>
+            <strong>Customer inbox</strong>
+            <span>New</span>
           </header>
           <div className="story-email-body">
             <span className="story-avatar">JH</span>
@@ -192,8 +193,7 @@ function LiveVisual({ visual }: { visual: StoryVisual }) {
             </p>
           </div>
           <footer>
-            <strong>{visual.questions}</strong>
-            questions need answers
+            {visual.summary}
           </footer>
         </div>
       );
