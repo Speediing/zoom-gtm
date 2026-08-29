@@ -28,6 +28,7 @@ export function useDemoPlayback(thread: DemoThread) {
   const [typingFrom, setTypingFrom] = useState<string | null>(null);
   const [sentDrafts, setSentDrafts] = useState<Record<string, boolean>>({});
   const [inView, setInView] = useState(false);
+  const [pausedByUser, setPausedByUser] = useState(false);
 
   const liveThread = useMemo(
     () => swapAccount(thread, account),
@@ -42,8 +43,10 @@ export function useDemoPlayback(thread: DemoThread) {
       setPlaying(false);
       return;
     }
-    setPlaying(true);
-  }, [inView]);
+    if (!pausedByUser) {
+      setPlaying(true);
+    }
+  }, [inView, pausedByUser]);
 
   useEffect(() => {
     if (!playing || done) {
@@ -85,7 +88,16 @@ export function useDemoPlayback(thread: DemoThread) {
     setVisibleCount(0);
     setSentDrafts({});
     setTypingFrom(null);
+    setPausedByUser(false);
     setPlaying(true);
+  }
+
+  function togglePlaying() {
+    setPlaying((current) => {
+      const next = !current;
+      setPausedByUser(!next);
+      return next;
+    });
   }
 
   function applyAccount(event: FormEvent) {
@@ -117,10 +129,10 @@ export function useDemoPlayback(thread: DemoThread) {
     account,
     draftAccount,
     setDraftAccount,
-    setPlaying,
     setInView,
     sendDraft,
     replay,
+    togglePlaying,
     applyAccount,
     current,
   };

@@ -193,8 +193,8 @@ export function GrokBotWindow({
     typingFrom,
     draftAccount,
     setDraftAccount,
-    setPlaying,
     replay,
+    togglePlaying,
     applyAccount,
     current,
   } = playback;
@@ -377,7 +377,7 @@ export function GrokBotWindow({
       <div className="demo-tools">
         <button
           type="button"
-          onClick={() => (done ? replay() : setPlaying((value) => !value))}
+          onClick={() => (done ? replay() : togglePlaying())}
         >
           {done ? "Replay" : playing ? "Pause" : "Play"}
         </button>
